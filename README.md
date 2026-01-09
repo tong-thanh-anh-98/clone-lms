@@ -6,3 +6,6 @@
 # Install Tailwind CSS with Vite
 - npm install -D tailwindcss@3 postcss autoprefixer
 - npx tailwindcss init -p
+
+# Install @clerk/clerk-react
+- npm install @clerk/clerk-react
