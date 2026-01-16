@@ -19,6 +19,7 @@ const App = () => {
     return (
         <div className='text-default min-h-screen bg-white'>
             {!isEducatorRoute && <Navbar />}
+
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/course-list' element={<CourseList />} />
@@ -37,7 +38,7 @@ const App = () => {
                 </Route>
             </Routes>
         </div>
-    )
-}
+    );
+};
 
 export default App

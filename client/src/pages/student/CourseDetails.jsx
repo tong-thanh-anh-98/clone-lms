@@ -4,8 +4,8 @@ import { AppContext } from '../../context/AppContext';
 import Loading from './../../components/student/Loading';
 import { assets } from '../../assets/assets';
 import humanizeDuration from 'humanize-duration';
-import Footer from '../../components/educator/Footer';
 import YouTube from 'react-youtube';
+import Footer from '../../components/student/Footer';
 
 const CourseDetails = () => {
     const { id } = useParams();

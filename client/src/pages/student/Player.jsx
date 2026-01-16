@@ -4,8 +4,8 @@ import { assets } from '../../assets/assets';
 import { useParams } from 'react-router-dom';
 import humanizeDuration from 'humanize-duration';
 import YouTube from 'react-youtube';
-import Footer from '../../components/educator/Footer';
 import Rating from '../../components/student/Rating';
+import Footer from '../../components/student/Footer';
 
 const Player = () => {
     const { enrolledCourses, calculateChapterTime, currency } = useContext(AppContext);
