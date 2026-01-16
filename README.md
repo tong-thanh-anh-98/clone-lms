@@ -9,3 +9,7 @@
 
 # Install @clerk/clerk-react
 - npm install @clerk/clerk-react
+
+# Uninstall
+- npm uninstall react-simple-star-rating
+- npm audit fix
