@@ -13,3 +13,6 @@
 # Uninstall
 - npm uninstall react-simple-star-rating
 - npm audit fix
+
+# Install Quill
+- npm install quill@2.0.3

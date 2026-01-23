@@ -43,7 +43,7 @@ const Footer = () => {
                 Copyright 2026 &copy; Academy. All right reserved.
             </p>
         </footer>
-    )
-}
+    );
+};
 
 export default Footer
