@@ -16,3 +16,18 @@
 
 # Install Quill
 - npm install quill@2.0.3
+
+# setup server
+- npm init -y
+
+# install package
+- npm install express nodemon dotenv cors cloudinary mongoose multer stripe svix@1.42.0 @clerk/express
+
+# Username
+- thanhanhdev
+
+# Password
+- thanhanhdev1998
+
+# Copy the connection string, then open MongoDB Compass
+- mongodb+srv://thanhanhdev:thanhanhdev1998@cluster0.dcocu1h.mongodb.net/
