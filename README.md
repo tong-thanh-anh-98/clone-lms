@@ -31,3 +31,7 @@
 
 # Copy the connection string, then open MongoDB Compass
 - mongodb+srv://thanhanhdev:thanhanhdev1998@cluster0.dcocu1h.mongodb.net/
+
+MONGODB_URI = 'mongodb+srv://thanhanhdev:thanhanhdev1998@cluster0.dcocu1h.mongodb.net'
+
+CLERK_WEBHOOK_SECRET = 'whsec_X5ZFO84BZl6lcHdtd6/nX4qTcABov71+'
