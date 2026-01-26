@@ -34,4 +34,4 @@
 
 MONGODB_URI = 'mongodb+srv://thanhanhdev:thanhanhdev1998@cluster0.dcocu1h.mongodb.net'
 
-CLERK_WEBHOOK_SECRET = 'whsec_X5ZFO84BZl6lcHdtd6/nX4qTcABov71+'
+CLERK_WEBHOOK_SECRET = 'whsec_SNeUdHJekm661xz50JJPZ5iT2+FlT07+'
