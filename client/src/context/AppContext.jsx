@@ -1,13 +1,18 @@
 import { createContext, useEffect, useState } from "react";
-import { dummyCourses, dummyTestimonial } from "../assets/assets";
+import { dummyCourses } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import humanizeDuration from "humanize-duration";
+import { useAuth } from '@clerk/clerk-react';
 
 export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
     const currency = import.meta.env.VITE_CURRENCY;
     const navigate = useNavigate();
+    // const { getToken } = useAuth();
+    // const { user } = useUser();
+    const { getToken, isLoaded, isSignedIn } = useAuth();
+
     const [allCourses, setAllCourses] = useState([]);
     const [allTestimonials, setAllTestimonials] = useState([]);
     const [isEducator, setIsEducator] = useState(true);
@@ -69,6 +74,24 @@ export const AppContextProvider = (props) => {
         fetchAllCourses();
         fetchUserEnrolledCourses();
     }, []);
+
+    // const logToken = async () => {
+    //     console.log(await getToken());
+    // }
+    // useEffect(() => {
+    //     if (user) {
+    //         logToken();
+    //     }
+    // }, [user]);
+    useEffect(() => {
+        if (!isLoaded || !isSignedIn) return;
+        const fetchToken = async () => {
+            const token = await getToken();
+            console.log(token);
+        };
+
+        fetchToken();
+    }, [isLoaded, isSignedIn]);
 
     const value = {
         currency, allCourses, navigate, calculationRating,
