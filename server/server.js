@@ -45,7 +45,38 @@ app.use(clerkMiddleware());
 /* ======================
    ROUTES
 ====================== */
-app.get('/', (req, res) => res.send('🥤Red Bull fully loaded! API is flying 🚀'));
+// app.get('/', (req, res) => res.send('🥤Red Bull fully loaded! API is flying 🚀'));
+app.get('/', (req, res) => {
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8" />
+            <title>API Status</title>
+            <style>
+                body {
+                    margin: 0;
+                    height: 100vh;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: #000;
+                    color: #fff;
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+                }
+                h1 {
+                    font-size: 2rem;
+                    text-align: center;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>🥤 Red Bull fully loaded! <br />API is flying 🚀</h1>
+        </body>
+        </html>
+    `);
+});
+
 app.use('/api/educator', educatorRouter);
 app.use('/api/course', courseRouter);
 app.use('/api/user', userRouter);
