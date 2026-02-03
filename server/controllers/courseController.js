@@ -7,9 +7,9 @@ export const getAllCourse = async (req, res) => {
             .select(['-courseContent', '-enrolledStudents'])
             .populate({ path: 'educator' });
 
-        res.json({ success: true, courses });
+        return res.json({ success: true, courses });
     } catch (error) {
-        res.json({ success: false, message: error.message });
+        return res.json({ success: false, message: error.message });
     }
 }
 
@@ -29,8 +29,8 @@ export const getCourseId = async (req, res) => {
             });
         });
 
-        res.json({ success: true, courseData });
+        return res.json({ success: true, courseData });
     } catch (error) {
-        res.json({ success: false, message: error.message });
+        return res.json({ success: false, message: error.message });
     }
 }

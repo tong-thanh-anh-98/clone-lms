@@ -6,7 +6,7 @@ import upload from '../configs/multer.js';
 const educatorRouter = express.Router();
 
 // educator role
-educatorRouter.get('/update-role', updateRoleToEducator);
+educatorRouter.post('/update-role', updateRoleToEducator);
 educatorRouter.post('/add-course', upload.single('image'), protectEducator, addCourse);
 educatorRouter.get('/courses', protectEducator, getEducatorCourse);
 educatorRouter.get('/dashboard', protectEducator, educatorDashboardData);

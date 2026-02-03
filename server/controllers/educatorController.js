@@ -19,9 +19,9 @@ export const updateRoleToEducator = async (req, res) => {
             }
         });
 
-        res.json({ success: true, message: 'You can publish a course now.' });
+        return res.json({ success: true, message: 'You can publish a course now.' });
     } catch (error) {
-        res.json({ success: false, message: error.message });
+        return res.json({ success: false, message: error.message });
     }
 }
 
@@ -43,9 +43,9 @@ export const addCourse = async (req, res) => {
         newCourse.courseThumbnail = imageUpload.secure_url;
         await newCourse.save();
 
-        res.json({ success: true, message: 'Course added!' })
+        return res.json({ success: true, message: 'Course added!' })
     } catch (error) {
-        res.json({ success: false, message: error.message });
+        return res.json({ success: false, message: error.message });
     }
 }
 
@@ -54,9 +54,9 @@ export const getEducatorCourse = async (req, res) => {
     try {
         const educator = req.auth.userId;
         const courses = await Course.find({ educator });
-        res.json({ success: true, courses })
+        return res.json({ success: true, courses })
     } catch (error) {
-        res.json({ success: false, message: error.message });
+        return res.json({ success: false, message: error.message });
     }
 }
 
@@ -64,7 +64,7 @@ export const updateEducatorCourse = async (req, res) => {
     try {
         const educator = req.auth.userId;
     } catch (error) {
-        res.json({ success: false, message: error.message });
+        return res.json({ success: false, message: error.message });
     }
 }
 
@@ -101,13 +101,13 @@ export const educatorDashboardData = async (req, res) => {
             });
         }
 
-        res.json({
+        return res.json({
             success: true, dashboardData: {
                 totalEarning, enrolledStudentsData, totalCourses
             }
         });
     } catch (error) {
-        res.json({ success: false, message: error.message });
+        return res.json({ success: false, message: error.message });
     }
 }
 
@@ -128,8 +128,8 @@ export const getEnrolledStudentsData = async (req, res) => {
             purchaseDate: purchase.createdAt
         }));
 
-        res.json({ success: true, enrolledStudents });
+        return res.json({ success: true, enrolledStudents });
     } catch (error) {
-        res.json({ success: false, message: error.message });
+        return res.json({ success: false, message: error.message });
     }
 }

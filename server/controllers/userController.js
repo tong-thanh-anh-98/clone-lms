@@ -14,9 +14,9 @@ export const getUserData = async (req, res) => {
             return res.json({ success: false, message: 'User not found.' });
         }
 
-        res.json({ success: true, user });
+        return res.json({ success: true, user });
     } catch (error) {
-        res.json({ success: false, message: error.message });
+        return res.json({ success: false, message: error.message });
     }
 }
 
@@ -26,9 +26,9 @@ export const userEnrolledCourses = async (req, res) => {
         const userId = req.auth.userId;
         const userData = await User.findById(userId).populate('enrolledCourses');
 
-        res.json({ success: true, enrolledCourses: userData.enrolledCourses });
+        return res.json({ success: true, enrolledCourses: userData.enrolledCourses });
     } catch (error) {
-        res.json({ success: false, message: error.message });
+        return res.json({ success: false, message: error.message });
     }
 }
 
@@ -42,7 +42,7 @@ export const purchaseCourse = async (req, res) => {
         const courseData = await Course.findById(courseId);
 
         if (!userData || !courseData) {
-            res.json({ success: false, message: 'Data not found.' });
+            return res.json({ success: false, message: 'Data not found.' });
         }
 
         const purchaseData = {
@@ -80,9 +80,9 @@ export const purchaseCourse = async (req, res) => {
             }
         });
 
-        res.json({ success: true, session_url: session.url });
+        return res.json({ success: true, session_url: session.url });
     } catch (error) {
-        res.json({ success: false, message: error.message });
+        return res.json({ success: false, message: error.message });
     }
 }
 
@@ -108,9 +108,9 @@ export const updateUserCourseProgress = async () => {
             });
         }
 
-        res.json({ success: true, message: 'Progress updated!' });
+        return res.json({ success: true, message: 'Progress updated!' });
     } catch (error) {
-        res.json({ success: false, message: error.message });
+        return res.json({ success: false, message: error.message });
     }
 }
 
@@ -121,9 +121,9 @@ export const getUserCourseProgress = async (req, res) => {
         const { courseId } = req.body;
         const progressData = await CourseProgress.findOne({ userId, courseId });
 
-        res.json({ success: true, progressData });
+        return res.json({ success: true, progressData });
     } catch (error) {
-        res.json({ success: false, message: error.message });
+        return res.json({ success: false, message: error.message });
     }
 }
 
@@ -148,7 +148,7 @@ export const addUserRating = async (req, res) => {
             return res.json({ success: false, message: 'User has not purchases this course.' });
         }
 
-        const existingRatingIndex = course.courseRatings.findIndex(r => r.userId === userid);
+        const existingRatingIndex = course.courseRatings.findIndex(r => r.userId === userId);
 
         if (existingRatingIndex > -1) {
             course.courseRating[existingRatingIndex].rating = rating;
@@ -160,6 +160,6 @@ export const addUserRating = async (req, res) => {
 
         return res.json({ success: true, message: 'Rating added!' });
     } catch (error) {
-        res.json({ success: false, message: error.message });
+        return res.json({ success: false, message: error.message });
     }
 }
