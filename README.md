@@ -17,6 +17,13 @@
 # Install Quill
 - npm install quill@2.0.3
 
+# Install axios, react-toastify
+- npm install axios react-toastify
+
+# Clear cache FE
+- rm -rf node_modules/.vite
+- npm run dev
+
 # setup server
 - npm init -y
 
