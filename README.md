@@ -42,3 +42,5 @@
 MONGODB_URI = 'mongodb+srv://thanhanhdev:thanhanhdev1998@cluster0.dcocu1h.mongodb.net'
 
 CLERK_WEBHOOK_SECRET = 'whsec_SNeUdHJekm661xz50JJPZ5iT2+FlT07+'
+
+endpoints domain webhook: https://clone-lms-six.vercel.app/clerk

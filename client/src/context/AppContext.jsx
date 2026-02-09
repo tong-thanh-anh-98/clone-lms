@@ -1,25 +1,68 @@
 import { createContext, useEffect, useState } from "react";
-import { dummyCourses } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import humanizeDuration from "humanize-duration";
 import { useAuth, useUser } from '@clerk/clerk-react';
+import { toast } from 'react-toastify';
+import axios from "axios";
 
 export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
+
+    const domain = import.meta.env.VITE_BACKEND_URL;
+    console.log(domain);
     const currency = import.meta.env.VITE_CURRENCY;
+
     const navigate = useNavigate();
+
     const { getToken } = useAuth();
     const { user } = useUser();
 
+    const [userData, setUserData] = useState(null);
     const [allCourses, setAllCourses] = useState([]);
-    const [allTestimonials, setAllTestimonials] = useState([]);
-    const [isEducator, setIsEducator] = useState(true);
+    const [isEducator, setIsEducator] = useState(false);
     const [enrolledCourses, setEnrolledCourses] = useState([]);
 
     // fell all courses
     const fetchAllCourses = async () => {
-        setAllCourses(dummyCourses);
+        try {
+            const { data } = await axios.get(`${domain}/api/course/all`);
+
+            if (data.success) {
+                setAllCourses(data.courses);
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+
+    // fetch user data
+    const fetchUserData = async () => {
+        if (user?.publicMetadata?.role === 'educator') {
+            setIsEducator(true);
+        }
+
+        try {
+            const token = await getToken();
+            console.log("TOKEN:", token);
+            const response = await axios.get(`${domain}/api/user/data`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            console.log(response.data);
+
+            if (response.data.success) {
+                setUserData(response.data.user);
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
     };
 
     // function to calculation average rating of course
@@ -33,7 +76,7 @@ export const AppContextProvider = (props) => {
             totalRating += rating.rating;
         });
 
-        return totalRating / course.courseRatings.length;
+        return Math.floor(totalRating / course.courseRatings.length);
     };
 
     // function to calculate course chapter time
@@ -66,27 +109,45 @@ export const AppContextProvider = (props) => {
 
     // fetch user enrolled courses
     const fetchUserEnrolledCourses = async () => {
-        setEnrolledCourses(dummyCourses);
+        try {
+            const token = await getToken();
+            const { data } = await axios.get(
+                `${domain}/api/user/enrolled-courses`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            if (data.success) {
+                setEnrolledCourses(data.enrolledCourses.reverse());
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
     };
 
+    // public
     useEffect(() => {
         fetchAllCourses();
-        fetchUserEnrolledCourses();
     }, []);
 
-    const logToken = async () => {
-        console.log(await getToken());
-    }
+    // protected
     useEffect(() => {
         if (user) {
-            logToken();
+            fetchUserData();
+            fetchUserEnrolledCourses();
         }
     }, [user]);
 
     const value = {
         currency, allCourses, navigate, calculationRating,
-        isEducator, setIsEducator, allTestimonials, calculateChapterTime,
-        calculateCourseDuration, calculateNoOfLectures, enrolledCourses, fetchUserEnrolledCourses
+        isEducator, setIsEducator, calculateChapterTime, calculateCourseDuration,
+        calculateNoOfLectures, enrolledCourses, fetchUserEnrolledCourses,
+        domain, userData, setUserData, getToken, fetchAllCourses,
     };
 
     return (

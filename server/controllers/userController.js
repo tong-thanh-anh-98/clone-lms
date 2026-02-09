@@ -87,7 +87,7 @@ export const purchaseCourse = async (req, res) => {
 }
 
 // update user course progress
-export const updateUserCourseProgress = async () => {
+export const updateUserCourseProgress = async (req, res) => {
     try {
         const userId = req.auth.userId;
         const { courseId, lectureId } = req.body;
@@ -144,14 +144,15 @@ export const addUserRating = async (req, res) => {
         }
 
         const user = await User.findById(userId);
-        if (!user || !user.enrolledCourses.includes(courseId)) {
+        // if (!user || !user.enrolledCourses.includes(courseId)) {
+        if (!user || !user.enrolledCourses.some(id => id.toString() === courseId)) {
             return res.json({ success: false, message: 'User has not purchases this course.' });
         }
 
         const existingRatingIndex = course.courseRatings.findIndex(r => r.userId === userId);
 
         if (existingRatingIndex > -1) {
-            course.courseRating[existingRatingIndex].rating = rating;
+            course.courseRatings[existingRatingIndex].rating = rating;
         } else {
             course.courseRatings.push({ userId, rating });
         }

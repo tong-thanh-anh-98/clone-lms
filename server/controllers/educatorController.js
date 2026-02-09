@@ -9,10 +9,6 @@ export const updateRoleToEducator = async (req, res) => {
     try {
         const userId = req.auth.userId;
 
-        if (!userId) {
-            return res.status(401).json({ success: false, message: 'Unauthorized.' });
-        }
-
         await clerkClient.users.updateUserMetadata(userId, {
             publicMetadata: {
                 role: 'educator',
