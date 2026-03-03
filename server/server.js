@@ -15,8 +15,6 @@ import userRouter from './routes/userRoutes.js';
 // initialize express
 const app = express();
 
-const PORT = 5000;
-
 await connectDB();
 
 await connectCloudinary();
@@ -26,18 +24,15 @@ app.use(express.json());
 app.use(clerkMiddleware());
 
 // Stripe Webhook
-app.post(
-   '/stripe',
-   express.raw({ type: 'application/json' }),
-   stripeWebhooks
-);
+app.post('/stripe', express.raw({ type: 'application/json' }), stripeWebhooks);
 
 app.get('/', (req, res) => res.send('The API is working!'));
 app.post('/clerk', express.json(), clerkWebhooks);
-app.use('/api/user', userRouter);
 app.use('/api/educator', educatorRouter);
+app.use('/api/user', userRouter);
 app.use('/api/course', courseRouter);
 
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-   console.log(`The server is currently running on port:${PORT}!`);
+   console.log(`The server is currently running on port: ${PORT}!`);
 });

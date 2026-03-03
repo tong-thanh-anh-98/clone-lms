@@ -10,7 +10,6 @@ export const AppContext = createContext();
 export const AppContextProvider = (props) => {
 
     const domain = import.meta.env.VITE_BACKEND_URL;
-    console.log(domain);
     const currency = import.meta.env.VITE_CURRENCY;
 
     const navigate = useNavigate();
@@ -40,25 +39,24 @@ export const AppContextProvider = (props) => {
 
     // fetch user data
     const fetchUserData = async () => {
-        if (user?.publicMetadata?.role === 'educator') {
+        if (user.publicMetadata.role === 'educator') {
             setIsEducator(true);
         }
 
         try {
             const token = await getToken();
-            console.log("TOKEN:", token);
+            console.log(token);
+
             const response = await axios.get(`${domain}/api/user/data`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
 
-            console.log(response.data);
-
-            if (response.data.success) {
-                setUserData(response.data.user);
+            if (response.success) {
+                setUserData(response.user);
             } else {
-                toast.error(response.data.message);
+                toast.error(response.message);
             }
         } catch (error) {
             toast.error(error.message);
