@@ -164,26 +164,3 @@ export const addUserRating = async (req, res) => {
         return res.json({ success: false, message: error.message });
     }
 }
-
-export const getEnrolledStudent = async (req, res) => {
-    try {
-        const educator = req.auth.userId;
-        const courses = await Course.find({ educator });
-        const courseIds = courses.map(course => course._id);
-
-        const purchases = await Purchase.find({
-            courseId: {$in: courseIds},
-            status: 'completed',
-        }).populate('userId', 'name imageUrl').populate('courseId', 'courseTitle');
-
-        const enrolledStudent = purchases.map(purchase => ({
-            student: purchase.userId,
-            courseTitle: purchase.courseId.courseTitle,
-            purchaseDate: purchase.createdAt
-        }));
-
-        return res.json({success:true, enrolledStudent});
-    } catch (error) {
-        return res.json({ success: false, message: error.message });
-    }
-}
